@@ -1,50 +1,67 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Evaluasi</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Evaluasi</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h2>Form Evaluasi</h2>
+<div class="wrapper">
 
+  <!-- LEFT SIDE -->
+  <div class="left">
+    <h1>Form Evaluasi</h1>
+    <p>Berikan masukan terbaikmu untuk pengembangan sistem kami.</p>
+  </div>
+
+  <!-- RIGHT SIDE (FORM) -->
+  <div class="right">
     <form id="contactForm">
-        <!-- Nama -->
-        <label>Nama:</label>
-        <input type="text" id="nama" placeholder="Masukkan nama" required>
 
-        <!-- Email -->
-        <label>Email:</label>
-        <input type="email" id="email" placeholder="Masukkan email" required>
+      <div class="input-group">
+        <input type="text" id="nama" required>
+        <label>Nama</label>
+      </div>
 
-        <!-- No Telepon -->
-        <label>No Telepon:</label>
-        <input type="tel" id="telp" placeholder="Masukkan nomor HP" required>
+      <div class="input-group">
+        <input type="email" id="email" required>
+        <label>Email</label>
+      </div>
 
-        <!-- Kategori -->
-        <label>Kategori:</label>
+      <div class="input-group">
+        <input type="tel" id="telp" required>
+        <label>No Telepon</label>
+      </div>
+
+      <div class="input-group">
         <select id="kategori" required>
-            <option value="">-- Pilih --</option>
-            <option value="Mahasiswa">Mahasiswa</option>
-            <option value="Dosen">Dosen</option>
+          <option value=""></option>
+          <option>Mahasiswa</option>
+          <option>Dosen</option>
         </select>
+        <label>Kategori</label>
+      </div>
 
-        <!-- Kesan -->
-        <label>Kesan dan Pesan:</label>
-        <textarea id="kesan" rows="3" placeholder="Tulis kesan dan pesan..." required></textarea>
+      <div class="input-group">
+        <textarea id="kesan" required></textarea>
+        <label>Kesan</label>
+      </div>
 
-        <!-- Kritik & Saran -->
-        <label>Kritik dan Saran:</label>
-        <textarea id="pesan" rows="4" placeholder="Tulis kritik dan saran..." required></textarea>
+      <div class="input-group">
+        <textarea id="pesan" required></textarea>
+        <label>Kritik & Saran</label>
+      </div>
 
-        <button type="submit">Kirim</button>
+      <button type="submit">Kirim</button>
+
     </form>
-</div>
 
-<div id="hasil"></div>
+    <div id="hasil"></div>
+  </div>
+
+</div>
 
 <script src="script.js"></script>
 </body>
