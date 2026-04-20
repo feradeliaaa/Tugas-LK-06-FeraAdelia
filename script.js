@@ -1,29 +1,81 @@
 document.getElementById("contactForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    let nama = document.getElementById("nama").value;
-    let email = document.getElementById("email").value;
-    let telp = document.getElementById("telp").value;
+    // Ambil data
+    let nama = document.getElementById("nama").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let telp = document.getElementById("telp").value.trim();
     let kategori = document.getElementById("kategori").value;
-    let kesan = document.getElementById("kesan").value;
-    let pesan = document.getElementById("pesan").value;
+    let kesan = document.getElementById("kesan").value.trim();
+    let pesan = document.getElementById("pesan").value.trim();
 
-    alert("Data evaluasi berhasil dikirim!");
+    // VALIDASI TAMBAHAN
+    if (!/^[0-9]+$/.test(telp)) {
+        tampilNotif("Nomor HP harus berupa angka!", "error");
+        return;
+    }
 
-    document.getElementById("hasil").innerHTML = `
-        <h3 class="judul-hasil">Keterangan Berhasil Dikirim</h3>
+    if (telp.length < 10) {
+        tampilNotif("Nomor HP terlalu pendek!", "error");
+        return;
+    }
 
-        <div class="card-hasil">
-            <h2>Data Evaluasi Berhasil Dikirim <span class="check">✅</span></h2>
-            
-            <p><b>Nama:</b> ${nama}</p>
-            <p><b>Email:</b> ${email}</p>
-            <p><b>No HP:</b> ${telp}</p>
-            <p><b>Kategori:</b> ${kategori}</p>
-            <p><b>Kesan:</b> ${kesan}</p>
-            <p><b>Kritik & Saran:</b> ${pesan}</p>
-        </div>
-    `;
+    // LOADING EFFECT
+    let hasilDiv = document.getElementById("hasil");
+    hasilDiv.innerHTML = `<p style="text-align:center;">⏳ Mengirim data...</p>`;
 
-    document.getElementById("contactForm").reset();
+    setTimeout(() => {
+
+        // SANITASI (hindari input aneh)
+        function safe(text) {
+            return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        hasilDiv.innerHTML = `
+            <h3 class="judul-hasil">✔ Data Berhasil Dikirim</h3>
+
+            <div class="card-hasil">
+                <h2>Terima Kasih 🎉</h2>
+
+                <p><b>Nama:</b> ${safe(nama)}</p>
+                <p><b>Email:</b> ${safe(email)}</p>
+                <p><b>No HP:</b> ${safe(telp)}</p>
+                <p><b>Kategori:</b> ${safe(kategori)}</p>
+                <p><b>Kesan:</b> ${safe(kesan)}</p>
+                <p><b>Kritik & Saran:</b> ${safe(pesan)}</p>
+
+                <button onclick="resetHasil()" class="btn-reset">Reset</button>
+            </div>
+        `;
+
+        hasilDiv.style.opacity = 0;
+        setTimeout(() => {
+            hasilDiv.style.opacity = 1;
+        }, 100);
+
+        tampilNotif("Data berhasil dikirim!", "success");
+
+        document.getElementById("contactForm").reset();
+
+    }, 800); // delay biar terasa real
 });
+
+
+// 🔔 NOTIFIKASI CUSTOM
+function tampilNotif(pesan, tipe) {
+    let notif = document.createElement("div");
+    notif.className = `notif ${tipe}`;
+    notif.innerText = pesan;
+
+    document.body.appendChild(notif);
+
+    setTimeout(() => {
+        notif.remove();
+    }, 3000);
+}
+
+
+// 🔄 RESET HASIL
+function resetHasil() {
+    document.getElementById("hasil").innerHTML = "<p>Data dikosongkan.</p>";
+}
